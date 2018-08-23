@@ -1,0 +1,61 @@
+
+TODO transfer this to README.md
+
+
+Instructions
+
+# [optional if testing locally] start minikube
+	minikube start
+	eval $(minikube docker-env)
+
+# Build Docker image
+	docker build -t spring-cloud-kube-config:0.0.1 .
+
+# Deploy ConfigMap
+	kubectl create -f kube-resources/configmap.yaml
+
+# Check ConfigMap creation
+	kubectl get cm
+	kubectl describe cm spring-cloud-kube-config
+
+# Deploy ServiceAccount, Roles and RoleBindings
+	kubectl create -f kube-resources/svc-account.yaml
+	kubectl create -f kube-resources/role.yaml
+	kubectl create -f kube-resources/role-bind.yaml
+
+# Check ServiceAccount, Roles and RoleBindings creation
+	kubectl get sa
+	kubectl get sa spring-cloud-kube-config -o yaml
+	kubectl get roles
+	kubectl get roles spring-cloud-kube-config -o yaml
+	kubectl get rolebindings
+	kubectl get rolebindings spring-cloud-kube-config -o yaml
+
+# Deploy application
+	kubectl create -f kube-resources/deploy.yaml
+
+# Check application deployment
+	kubectl rollout status deploy/spring-cloud-kube-config
+	kubectl get deploy
+	kubectl get po -l app=spring-cloud-kube-config -o jsonpath='{range .items[*]}{.metadata.name}{"\n"}{end}' | xargs kubectl logs -f
+
+# Expose application
+	kubectl create -f kube-resources/svc.yaml
+
+# Check application exposure
+	kubectl get svc -l app=spring-cloud-kube-config
+
+# [optional] Create Ingress
+	kubectl create -f kube-resources/ing.yaml
+
+# [optional] Check application exposure
+	kubectl get ing
+
+# Test application
+	?
+
+# Reloading ConfigMap
+	kubectl edit configmap spring-cloud-kube-config
+
+# Test application after configurations refresh
+	?

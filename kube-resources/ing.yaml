@@ -1,0 +1,22 @@
+# https://kubernetes.io/docs/concepts/services-networking/ingress/
+apiVersion: v1
+kind: Ingress
+metadata:
+  name: spring-cloud-kube-config
+  labels:
+    app: spring-cloud-kube-config
+    group: spring-cloud-kube-samples
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  backend:
+    serviceName: spring-cloud-kube-config
+    servicePort: 80
+  rules:
+  - host: spring.cloud.kube.config
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: spring-cloud-kube-config
+          servicePort: 8080

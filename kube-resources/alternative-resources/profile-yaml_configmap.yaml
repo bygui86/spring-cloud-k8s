@@ -1,0 +1,21 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: spring-cloud-kube-config
+data:
+  application.yaml: |-
+    spring:
+      profiles: dev
+    pool:
+      size:
+        name: dev-kube-pool
+        core: 1
+        max: 16
+    ---
+    spring:
+      profiles: prod
+    pool:
+      size:
+        name: prod-kube-pool
+        core: 2
+        max: 32

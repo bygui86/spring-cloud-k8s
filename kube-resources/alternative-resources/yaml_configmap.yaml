@@ -1,0 +1,11 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: spring-cloud-kube-config
+data:
+  application.yaml: |-
+    pool:
+      size:
+        name: kube-pool
+        core: 1
+        max: 16

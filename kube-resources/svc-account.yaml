@@ -1,0 +1,9 @@
+# https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/
+# https://kubernetes.io/docs/reference/access-authn-authz/service-accounts-admin/
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: spring-cloud-kube-config
+  labels:
+    app: spring-cloud-kube-config
+    group: spring-cloud-kube-samples

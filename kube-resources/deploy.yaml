@@ -1,0 +1,41 @@
+# https://kubernetes.io/docs/concepts/workloads/controllers/deployment/
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spring-cloud-kube-config
+  labels:
+    app: spring-cloud-kube-config
+    group: spring-cloud-kube-samples
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: spring-cloud-kube-config
+  template:
+    metadata:
+      labels:
+        app: spring-cloud-kube-config
+    spec:
+      containers:
+      - name: spring-cloud-kube-config
+        image: spring-cloud-kube-config:0.0.1
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8081
+        livenessProbe:
+          httpGet:
+            path: /actuator/health
+            port: 8081
+          initialDelaySeconds: 90
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 1
+        readinessProbe:
+          httpGet:
+            path: /actuator/health
+            port: 8081
+          periodSeconds: 70
+          successThreshold: 1
+          timeoutSeconds: 1
+      terminationGracePeriodSeconds: 10
+      serviceAccountName: spring-cloud-kube-config

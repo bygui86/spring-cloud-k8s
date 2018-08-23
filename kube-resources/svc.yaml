@@ -1,0 +1,20 @@
+# https://kubernetes.io/docs/tutorials/services/
+# https://kubernetes.io/docs/concepts/services-networking/service/
+apiVersion: v1
+kind: Service
+metadata:
+  name: spring-cloud-kube-config
+  labels:
+    app: spring-cloud-kube-config
+    group: spring-cloud-kube-samples
+spec:
+  # type: ClusterIP
+  # type: NodePort
+  type: LoadBalancer
+  ports:
+  - port: 80
+    targetPort: 8081
+    protocol: TCP
+    name: spring-cloud-kube-config
+  selector:
+    app: spring-cloud-kube-config

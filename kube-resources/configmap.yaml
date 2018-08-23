@@ -1,0 +1,13 @@
+# https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: spring-cloud-kube-config
+  labels:
+    app: spring-cloud-kube-config
+    group: spring-cloud-kube-samples
+data:
+  application.properties: |-
+    pool.size.name=kube-pool
+    pool.size.core=1
+    pool.size.max=16
