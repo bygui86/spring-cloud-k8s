@@ -5,15 +5,19 @@
 
 # VARIABLES
 
-NAME := spring-cloud-kube-config
+NAME := spring-cloud-k8s-config
+VERSION := 0.0.1
 
 BUILD_TOOL := ./mvnw
 JAR_FILE := $(shell find target -name '*.jar' 2>/dev/null)
 
 IMAGE_NAME := $(NAME)
-IMAGE_TAG := 0.0.1
+IMAGE_TAG := $(VERSION)
 IMAGE_EXPOSE_PORT := 8081
-DOCKER_HOST_IP := localhost
+# local docker registry
+#DOCKER_HOST_IP := localhost
+# minikube
+DOCKER_HOST_IP := 192.168.99.100
 DOCKER_HOST_PORT := 5000
 
 # see https://docs.spring.io/spring-boot/docs/2.0.3.RELEASE/maven-plugin/run-mojo.html#jvmArguments
@@ -42,6 +46,7 @@ print-variables :		## Print variables values
 	@echo "MAKEFILE_LIST: $(MAKEFILE_LIST)"
 	@echo "- - - "
 	@echo "NAME: $(NAME)"
+	@echo "VERSION: $(VERSION)"
 	@echo "- - - "
 	@echo "BUILD_TOOL: $(BUILD_TOOL)"
 	@echo "GIT_COMMIT_HASH: $(GIT_COMMIT_HASH)"

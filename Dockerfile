@@ -6,4 +6,4 @@ WORKDIR /opt
 
 EXPOSE 8081
 
-ENTRYPOINT exec java $JAVA_OPTS -jar spring-cloud-kube-config.jar
+ENTRYPOINT exec java $JAVA_OPTS -jar spring-cloud-k8s-config.jar

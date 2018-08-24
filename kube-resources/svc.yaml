@@ -3,10 +3,10 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: spring-cloud-kube-config
+  name: spring-cloud-k8s-config
   labels:
-    app: spring-cloud-kube-config
-    group: spring-cloud-kube-samples
+    app: spring-cloud-k8s-config
+    group: spring-cloud-k8s-samples
 spec:
   # type: ClusterIP
   # type: NodePort
@@ -15,6 +15,6 @@ spec:
   - port: 80
     targetPort: 8081
     protocol: TCP
-    name: spring-cloud-kube-config
+    name: spring-cloud-k8s-config
   selector:
-    app: spring-cloud-kube-config
+    app: spring-cloud-k8s-config

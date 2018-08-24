@@ -2,10 +2,10 @@
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
-  name: spring-cloud-kube-config
+  name: spring-cloud-k8s-config
   labels:
-    app: spring-cloud-kube-config
-    group: spring-cloud-kube-samples
+    app: spring-cloud-k8s-config
+    group: spring-cloud-k8s-samples
 rules:
 - apiGroups:
   - extensions

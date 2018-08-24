@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 @Getter
 @Setter
 @Configuration("poolSizeConfig")
-@ConfigurationProperties(prefix = "pool.size")
+@ConfigurationProperties(prefix = "poolsize")
 public class PoolSizeConfig {
 
 	String name;

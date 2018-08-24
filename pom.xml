@@ -4,13 +4,18 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.rabbit.samples</groupId>
-	<artifactId>spring-cloud-kube-config</artifactId>
+	<artifactId>spring-cloud-k8s-config</artifactId>
 	<version>0.0.1</version>
 	<packaging>jar</packaging>
 
-	<name>spring-cloud-kube-config</name>
-	<description>Spring Cloud Kubernetes Config sample project</description>
+	<name>spring-cloud-k8s-config</name>
+	<description>Spring Cloud Kubernetes sample project - Config and Reloading</description>
 	<url>https://github.com/bygui86/spring-cloud-k8s-config</url>
+
+	<organization>
+		<name>MB SOLID Consulting</name>
+		<url>http://mbsolidconsulting.com</url>
+	</organization>
 
 	<contributors>
 		<contributor>
@@ -26,6 +31,13 @@
 		</developer>
 	</developers>
 
+	<scm>
+		<url>https://github.com/bygui86/spring-cloud-k8s-config</url>
+		<connection>scm:git:git://github.com/bygui86/spring-cloud-k8s-config.git</connection>
+		<developerConnection>scm:git:ssh://git@github.com/bygui86/spring-cloud-k8s-config.git</developerConnection>
+		<tag>HEAD</tag>
+	</scm>
+
 	<properties>
 		<!-- general -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -38,9 +50,17 @@
 		<maven-compiler-plugin.version>3.7.0</maven-compiler-plugin.version>
 
 		<!-- spring -->
-		<spring-boot.version>2.0.4.RELEASE</spring-boot.version>
-		<spring-cloud.version>Finchley.RELEASE</spring-cloud.version>
-		<spring-cloud-kube.version>0.3.0.RELEASE</spring-cloud-kube.version>
+		<spring-boot-maven-plugin.version>2.0.4.RELEASE</spring-boot-maven-plugin.version>
+		<!-- stables -->
+		<!--<spring-boot.version>2.0.4.RELEASE</spring-boot.version>-->
+		<!--<spring-cloud.version>Finchley.RELEASE</spring-cloud.version>-->
+		<!--<spring-cloud-kube.version>0.3.0.RELEASE</spring-cloud-kube.version>-->
+		<!-- snapshots-milestones -->
+		<spring-boot.version>2.1.0.M2</spring-boot.version>
+		<!--<spring-cloud.version>Greenwich.BUILD-SNAPSHOT</spring-cloud.version>-->
+		<!--<spring-cloud-commons.version>2.1.0.BUILD-SNAPSHOT</spring-cloud-commons.version>-->
+		<!--<spring-cloud-netflix.version>2.1.0.BUILD-SNAPSHOT</spring-cloud-netflix.version>-->
+		<spring-cloud-k8s.version>1.0.0.BUILD-SNAPSHOT</spring-cloud-k8s.version>
 
 		<!-- logging -->
 		<slf4.version>1.7.25</slf4.version>
@@ -48,6 +68,36 @@
 		<!-- others -->
 		<lombok.version>1.18.0</lombok.version>
 	</properties>
+
+	<repositories>
+		<!-- spring-snapshots -->
+		<repository>
+			<id>spring-snapshots</id>
+			<name>Spring Snapshots</name>
+			<url>https://repo.spring.io/snapshot</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+		<!-- spring-milestones -->
+		<repository>
+			<id>spring-milestones</id>
+			<name>Spring Milestones</name>
+			<url>https://repo.spring.io/milestone</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+		<!-- spring-releases-->
+		<!--<repository>-->
+		<!--<id>spring-releases</id>-->
+		<!--<name>Spring Releases</name>-->
+		<!--<url>https://repo.spring.io/release</url>-->
+		<!--<snapshots>-->
+		<!--<enabled>false</enabled>-->
+		<!--</snapshots>-->
+		<!--</repository>-->
+	</repositories>
 
 	<dependencyManagement>
 		<dependencies>
@@ -60,18 +110,32 @@
 				<type>pom</type>
 			</dependency>
 			<!-- spring-cloud -->
-			<dependency>
-				<groupId>org.springframework.cloud</groupId>
-				<artifactId>spring-cloud-dependencies</artifactId>
-				<version>${spring-cloud.version}</version>
-				<type>pom</type>
-				<scope>import</scope>
-			</dependency>
-			<!-- spring-cloud-kube -->
+			<!--<dependency>-->
+			<!--<groupId>org.springframework.cloud</groupId>-->
+			<!--<artifactId>spring-cloud-dependencies</artifactId>-->
+			<!--<version>${spring-cloud.version}</version>-->
+			<!--<type>pom</type>-->
+			<!--<scope>import</scope>-->
+			<!--</dependency>-->
+			<!--<dependency>-->
+			<!--<groupId>org.springframework.cloud</groupId>-->
+			<!--<artifactId>spring-cloud-commons-dependencies</artifactId>-->
+			<!--<version>${spring-cloud-commons.version}</version>-->
+			<!--<type>pom</type>-->
+			<!--<scope>import</scope>-->
+			<!--</dependency>-->
+			<!--<dependency>-->
+			<!--<groupId>org.springframework.cloud</groupId>-->
+			<!--<artifactId>spring-cloud-netflix-dependencies</artifactId>-->
+			<!--<version>${spring-cloud-netflix.version}</version>-->
+			<!--<type>pom</type>-->
+			<!--<scope>import</scope>-->
+			<!--</dependency>-->
+			<!-- spring-cloud-k8s -->
 			<dependency>
 				<groupId>org.springframework.cloud</groupId>
 				<artifactId>spring-cloud-kubernetes-dependencies</artifactId>
-				<version>${spring-cloud-kube.version}</version>
+				<version>${spring-cloud-k8s.version}</version>
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
@@ -87,23 +151,22 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
-			<exclusions>
-				<exclusion>
-					<groupId>org.springframework.boot</groupId>
-					<artifactId>spring-boot-starter-tomcat</artifactId>
-				</exclusion>
-			</exclusions>
+			<!--<exclusions>-->
+			<!--<exclusion>-->
+			<!--<groupId>org.springframework.boot</groupId>-->
+			<!--<artifactId>spring-boot-starter-tomcat</artifactId>-->
+			<!--</exclusion>-->
+			<!--</exclusions>-->
 		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-undertow</artifactId>
-		</dependency>
+		<!--<dependency>-->
+		<!--<groupId>org.springframework.boot</groupId>-->
+		<!--<artifactId>spring-boot-starter-undertow</artifactId>-->
+		<!--</dependency>-->
 
-		<!-- spring-cloud-kube -->
+		<!-- spring-cloud-k8s -->
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-kubernetes-config</artifactId>
-			<version>${spring-cloud-kube.version}</version>
 		</dependency>
 
 		<!-- logging -->
@@ -128,6 +191,36 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
+
+	<pluginRepositories>
+		<!-- spring-snapshots -->
+		<pluginRepository>
+			<id>spring-snapshots</id>
+			<name>Spring Snapshots</name>
+			<url>https://repo.spring.io/snapshot</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</pluginRepository>
+		<!-- spring-milestones -->
+		<pluginRepository>
+			<id>spring-milestones</id>
+			<name>Spring Milestones</name>
+			<url>https://repo.spring.io/milestone</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</pluginRepository>
+		<!-- spring-releases -->
+		<!--<pluginRepository>-->
+		<!--<id>spring-releases</id>-->
+		<!--<name>Spring Releases</name>-->
+		<!--<url>https://repo.spring.io/release</url>-->
+		<!--<snapshots>-->
+		<!--<enabled>false</enabled>-->
+		<!--</snapshots>-->
+		<!--</pluginRepository>-->
+	</pluginRepositories>
 
 	<build>
 		<!-- general -->
@@ -160,6 +253,7 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<!--<version>${spring-boot-maven-plugin.version}</version>-->
 				<version>${spring-boot.version}</version>
 				<executions>
 					<execution>

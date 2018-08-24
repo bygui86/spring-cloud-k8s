@@ -34,6 +34,8 @@ public class InfoRestController {
 	@GetMapping
 	public InfoDto getInfo() {
 
+		log.debug("Getting info...");
+
 		idCounter++;
 		return createInfoDto();
 	}

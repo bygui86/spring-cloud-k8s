@@ -2,23 +2,23 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: spring-cloud-kube-config
+  name: spring-cloud-k8s-config
   labels:
-    app: spring-cloud-kube-config
-    group: spring-cloud-kube-samples
+    app: spring-cloud-k8s-config
+    group: spring-cloud-k8s-samples
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: spring-cloud-kube-config
+      app: spring-cloud-k8s-config
   template:
     metadata:
       labels:
-        app: spring-cloud-kube-config
+        app: spring-cloud-k8s-config
     spec:
       containers:
-      - name: spring-cloud-kube-config
-        image: spring-cloud-kube-config:0.0.1
+      - name: spring-cloud-k8s-config
+        image: spring-cloud-k8s-config:0.0.1
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 8081
@@ -38,4 +38,4 @@ spec:
           successThreshold: 1
           timeoutSeconds: 1
       terminationGracePeriodSeconds: 10
-      serviceAccountName: spring-cloud-kube-config
+      serviceAccountName: spring-cloud-k8s-config
